@@ -4,21 +4,16 @@ day <- 6
 
 # Data input
 input <- get_input(day)
+input_clean <- input %>% str_split(" +") %>% 
+  lapply(function(line){line[2:length(line)] %>% as.numeric})
 
-input_clean <- input %>% str_split(" +") %>% lapply(function(line){line[2:length(line)]})
-
-times <- input_clean[[1]] %>% as.numeric
-distances <- input_clean[[2]] %>% as.numeric
+num_options <- function(time, distance){
+  1:time %>% {. * (time - .)} %>% {. > distance} %>% sum()
+}
 
 # Pt 1
-(ans_1 <- sapply(1:length(times), function(race){
-  1:times[race] %>% {. * (times[race]- .)} %>% .[. > distances[race]] %>% length()
-}) %>%
-  prod)
+(ans_1 <- mapply(num_options, input_clean[[1]], input_clean[[2]]) %>% prod())
 
 # Pt 2
-
-time_single <- paste0(times, collapse = "") %>% as.numeric
-distance_single <- paste0(distances, collapse = "") %>% as.numeric
-
-1:time_single %>% {. * (time_single - .)} %>% .[. > distance_single] %>% length()
+(ans_2 <- num_options(time     = paste0(input_clean[[1]], collapse = "") %>% as.numeric,
+                      distance = paste0(input_clean[[2]], collapse = "") %>% as.numeric))
