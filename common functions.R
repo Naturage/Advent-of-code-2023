@@ -8,8 +8,8 @@ library(stringi)
 
 get_input <- function(day){
   
-  if(file.exists(here(paste0("Day ",day), "Data","input.rds"))){
-    input <- read_rds(here(paste0("day ",day), "data","input.rds"))
+  if(file.exists(here(paste0("Day ",sprintf("%02d",day)), "Data","input.rds"))){
+    input <- read_rds(here(paste0("day ",sprintf("%02d",day)), "data","input.rds"))
   } else {
     suppressWarnings(session_id <- readLines(here("session.txt")))
     
@@ -18,7 +18,7 @@ get_input <- function(day){
       content(encoding = 'UTF-8') %>%
       read_lines()
     
-    write_rds(input, here(paste0("day ",day), "data","input.rds"))
+    write_rds(input, here(paste0("day ",sprintf("%02d",day)), "data","input.rds"))
   }
   
   return(input)
