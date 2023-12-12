@@ -6,6 +6,8 @@ library(tidyr)
 library(stringr)
 library(stringi)
 
+options(scipen = 999)
+
 get_input <- function(day){
   
   if(file.exists(here(paste0("Day ",sprintf("%02d",day)), "Data","input.rds"))){
